@@ -25,8 +25,8 @@ end
 Converter: ExamplePrior -> PackedExamplePrior::Dict{String, Any}
 """
 function convert(::Type{Dict{String, Any}}, prior::ExamplePrior)
-    z = convert(Type{Dict{String, Any}}, prior.Z)
-    return Packed_Factor([z], "ExamplePrior")
+    z = convert(Dict{String, Any}, prior.Z)
+    return JSON.parse(JSON.json(Packed_Factor([z], "ExamplePrior")))
 end
 
 """
