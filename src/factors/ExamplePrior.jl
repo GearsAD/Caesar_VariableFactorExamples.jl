@@ -13,7 +13,7 @@ struct PackedExamplePrior <: PackedInferenceType
   PackedExamplePrior() = new()
   PackedExamplePrior(z::AS) where {AS <: AbstractString} = new(z)
 end
-function convert(::Type{PackedExamplePrior}, d::Prior)
+function convert(::Type{PackedExamplePrior}, d::ExamplePrior)
   return PackedExamplePrior(string(d.Z))
 end
 function convert(::Type{ExamplePrior}, d::PackedExamplePrior)

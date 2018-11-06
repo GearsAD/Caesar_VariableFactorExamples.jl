@@ -22,7 +22,10 @@ backToJson = convert(Dict{String, Any}, backToFactor)
 # Assert
 @test JSON.json(backToJson) == JSON.json(jsonConvert)
 
-# Packing
-
-# Unpacking
+# Packing and Uunpacking
+packed = convert(PackedExamplePrior, examplePrior)
+unpacked = convert(ExamplePrior, packed)
+repacked = convert(PackedExamplePrior, unpacked)
+# Assert
+@test JSON.json(packed) === JSON.json(repacked)
 end

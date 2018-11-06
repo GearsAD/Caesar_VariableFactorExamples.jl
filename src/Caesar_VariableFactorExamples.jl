@@ -13,7 +13,7 @@ include("variables/ExamplePose2.jl")
 include("factors/ExamplePrior.jl")
 include("factors/ExamplePose2Pose2.jl")
 
-export ExamplePrior
+export ExamplePrior, PackedExamplePrior
 export ExamplePose2
 export getSample
 export convert
