@@ -8,18 +8,9 @@
 A duplication of the Pose2Pose2 factor structure for demonstration purposes.
 Note that this a FunctorPairwise factor.
 """
-mutable struct ExamplePose2Pose2{T} <: IncrementalInference.FunctorPairwise where {T <: IIF.SamplableBelief}
- z::T
- ExamplePose2Pose2{T}() where {T <: IIF.SamplableBelief} = new{T}()
- ExamplePose2Pose2{T}(z1::T) where {T <: IIF.SamplableBelief} = new{T}(z1)
+struct ExamplePose2Pose2{T <: IIF.SamplableBelief} <: IIF.AbstractRelativeRoots
+  Z::T  
 end
-
-"""
-    $(SIGNATURES)
-
-Constructor for the ExamplePose2Pose2 factor structure.
-"""
-ExamplePose2Pose2(z::T) where {T <: IIF.SamplableBelief} = ExamplePose2Pose2{T}(z)
 
 """
     $(SIGNATURES)
@@ -27,19 +18,17 @@ ExamplePose2Pose2(z::T) where {T <: IIF.SamplableBelief} = ExamplePose2Pose2{T}(
 The sampler for the ExamplePose2Pose2 structure.
 This provides N samples from the factor s.
 """
-getSample(s::Pose2Pose2{<:IIF.SamplableBelief}, N::Int=1) = (rand(s.z,N), )
+pgetSample(cfo::CalcFactor{<:ExamplePose2Pose2}, N::Int=1) = (reshape(rand(cfo.factor.Z,N),1,N), )
 
 """
     $(SIGNATURES)
 
 ???
 """
-function (s::Pose2Pose2{<:IIF.SamplableBelief})(res::Array{Float64},
-           userdata,
-           idx::Int,
-           meas::Tuple,
-           wxi::Array{Float64,2},
-           wxj::Array{Float64,2}  )
+function (s::Pose2Pose2})(res::Array{Float64},
+                    z,
+           wxi,
+           wxj  )
  #
  wXjhat = SE2(wxi[1:3,idx])*SE2(meas[1][1:3,idx])
  jXjhat = SE2(wxj[1:3,idx]) \ wXjhat
